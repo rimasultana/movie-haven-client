@@ -1,11 +1,11 @@
 import React from 'react';
 
-const FavMovie = () => {
+const Footer = () => {
     return (
         <div>
-            <h1>Fav movie</h1>
+            <h1>This is Fotter</h1>
         </div>
     );
 };
 
-export default FavMovie;
+export default Footer;
