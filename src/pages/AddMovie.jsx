@@ -7,11 +7,10 @@ const AddMovie = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     setValue,
+    formState: { errors },
   } = useForm();
   const [rating, setRating] = useState(0);
-  const [email] = useState("user@example.com"); // Replace with actual user's email
 
   // Genre options
   const genres = ["Comedy", "Drama", "Horror", "Action", "Romance", "Sci-Fi"];
@@ -21,10 +20,9 @@ const AddMovie = () => {
 
   // Validation function for custom validation
   const onSubmit = (data) => {
-    const { moviePoster, movieTitle, genre, duration, releaseYear, summary } =
-      data;
+    const { moviePoster, movieTitle, duration, summary } = data;
+    data.rating = rating;
 
-    // Additional validation checks
     if (
       !moviePoster.startsWith("http://") &&
       !moviePoster.startsWith("https://")
@@ -44,31 +42,28 @@ const AddMovie = () => {
       toast.error("Summary must be at least 10 characters long.");
       return;
     }
-
-    // If everything is valid
-    const newMovie = {
-      moviePoster,
-      movieTitle,
-      genre,
-      duration,
-      releaseYear,
-      rating,
-      summary,
-      email,
-    };
-
-    // Here, you can send the `newMovie` data to your backend API to store in your database.
-    // Assuming the movie is successfully added, we show a success message.
-    toast.success("Movie added successfully!");
-
-    // Clear form after successful submission
-    setValue("moviePoster", "");
-    setValue("movieTitle", "");
-    setValue("genre", "");
-    setValue("duration", "");
-    setValue("releaseYear", "");
-    setValue("summary", "");
-    setRating(0);
+    // post moive
+    fetch("http://localhost:5000/movie", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          toast.success("Movie added successfully!");
+        }
+        setValue("moviePoster", "");
+        setValue("movieTitle", "");
+        setValue("genre", "");
+        setValue("duration", "");
+        setValue("releaseYear", "");
+        setValue("summary", "");
+        setRating(0);
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -76,7 +71,6 @@ const AddMovie = () => {
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold text-center mb-6">Add Movie</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Movie Poster */}
           <div className="mb-4">
             <label className="block text-gray-700">Movie Poster URL</label>
             <input
@@ -92,8 +86,6 @@ const AddMovie = () => {
               </span>
             )}
           </div>
-
-          {/* Movie Title */}
           <div className="mb-4">
             <label className="block text-gray-700">Movie Title</label>
             <input
@@ -113,8 +105,6 @@ const AddMovie = () => {
               </span>
             )}
           </div>
-
-          {/* Genre Dropdown */}
           <div className="mb-4">
             <label className="block text-gray-700">Genre</label>
             <select
@@ -134,8 +124,6 @@ const AddMovie = () => {
               </span>
             )}
           </div>
-
-          {/* Duration */}
           <div className="mb-4">
             <label className="block text-gray-700">Duration (in minutes)</label>
             <input
@@ -155,8 +143,6 @@ const AddMovie = () => {
               </span>
             )}
           </div>
-
-          {/* Release Year Dropdown */}
           <div className="mb-4">
             <label className="block text-gray-700">Release Year</label>
             <select
@@ -195,8 +181,6 @@ const AddMovie = () => {
               </span>
             )}
           </div>
-
-          {/* Summary */}
           <div className="mb-4">
             <label className="block text-gray-700">Summary</label>
             <textarea

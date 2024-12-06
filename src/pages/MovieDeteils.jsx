@@ -1,15 +1,54 @@
-import React from "react";
+import toast from "react-hot-toast";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
-const MovieDetails = ({ movie }) => {
+const MovieDetails = () => {
+  const email = "rima@gmail.com";
+  const data = useLoaderData();
+  const navigate = useNavigate();
+  const {
+    moviePoster,
+    movieTitle,
+    genre,
+    duration,
+    releaseYear,
+    rating,
+    summary,
+    _id,
+  } = data;
   const handleDelete = () => {
-    // Logic to delete the movie (probably API call)
-    console.log("Movie Deleted");
+    fetch(`http://localhost:5000/movie/${_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("successfully Delete Movie");
+          navigate("/all-movie");
+        }
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleAddToFavorite = () => {
-    // Logic to add the movie to favorites
-    console.log("Movie Added to Favorites");
-    // Optional: Show toast or confirmation message
+    data.email = email;
+    fetch("http://localhost:5000/fav-movie", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          toast.success("Added to Favorites!");
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -19,8 +58,8 @@ const MovieDetails = ({ movie }) => {
         <div className="relative">
           <img
             className="w-full h-96 object-cover"
-            src={movie.poster}
-            alt={movie.title}
+            src={moviePoster}
+            alt={moviePoster}
           />
         </div>
 
@@ -28,29 +67,29 @@ const MovieDetails = ({ movie }) => {
         <div className="p-6 space-y-6">
           {/* Movie Title */}
           <h1 className="text-3xl font-extrabold text-gray-800">
-            {movie?.title}
+            {movieTitle}
           </h1>
 
           {/* Movie Info */}
           <div className="flex flex-wrap gap-4">
             <p className="text-lg font-semibold text-gray-600">
-              Genre: {movie?.genre}
+              Genre: {genre}
             </p>
             <p className="text-lg font-semibold text-gray-600">
-              Duration: {movie?.duration} mins
+              Duration: {duration} mins
             </p>
             <p className="text-lg font-semibold text-gray-600">
-              Release Year: {movie?.releaseYear}
+              Release Year: {releaseYear}
             </p>
             <p className="text-lg font-semibold text-gray-600">
-              Rating: {movie?.rating} ★
+              Rating: {rating} ★
             </p>
           </div>
 
           {/* Movie Summary */}
           <div>
             <h2 className="text-xl font-semibold text-gray-800">Summary</h2>
-            <p className="text-gray-600">{movie?.summary}</p>
+            <p className="text-gray-600">{summary}</p>
           </div>
 
           {/* Buttons */}
