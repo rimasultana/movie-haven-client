@@ -1,3 +1,10 @@
+import App from "../components/MovieCard";
+
 export default function Movies() {
-  return <div>Movies</div>;
+  return (
+    <div>
+      Movies
+      <App />
+    </div>
+  );
 }
