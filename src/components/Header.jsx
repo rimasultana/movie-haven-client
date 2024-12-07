@@ -10,7 +10,9 @@ import {
   FaBars,
   FaTimes,
   FaUser,
+  FaSignOutAlt,
 } from "react-icons/fa";
+import { RiMovie2AiFill } from "react-icons/ri";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,15 +24,12 @@ const Header = () => {
   return (
     <header className="bg-gray-900 text-white sticky top-0 z-50">
       <div className="container mx-auto w-11/12 px-4 py-3 flex justify-between items-center">
-        {/* Logo */}
         <div className="flex items-center">
           <FaFilm className="text-3xl text-primary mr-2" />
           <Link to="/" className="text-2xl font-bold">
             MovieHaven
           </Link>
         </div>
-
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-6">
           <NavLink
             to="/"
@@ -46,6 +45,7 @@ const Header = () => {
               `hover:text-primary transition ${isActive ? "text-primary" : ""}`
             }
           >
+            <RiMovie2AiFill className="inline mr-2" />
             All Movies
           </NavLink>
           <NavLink
@@ -65,15 +65,32 @@ const Header = () => {
             <FaHeart className="inline mr-2" /> My Favorites
           </NavLink>
         </nav>
-
-        {/* Profile Avatar (Non-clickable) */}
         <div className="hidden md:flex items-center space-x-4">
           <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
             <FaUser className="text-xl text-white" />
           </div>
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              `hover:text-primary transition ${isActive ? "text-primary" : ""}`
+            }
+          >
+            <FaSignInAlt className="inline mr-2" /> Login
+          </NavLink>
+          <NavLink
+            to="/register"
+            className={({ isActive }) =>
+              `hover:text-primary transition ${isActive ? "text-primary" : ""}`
+            }
+          >
+            <FaUserPlus className="inline mr-2" />
+            Register
+          </NavLink>
+          <button className="`hover:text-primary transition">
+            <FaSignOutAlt className="inline mr-2" />
+            Log Out
+          </button>
         </div>
-
-        {/* Mobile Menu Icon */}
         <div className="md:hidden">
           <button
             onClick={toggleMenu}
@@ -87,8 +104,6 @@ const Header = () => {
           </button>
         </div>
       </div>
-
-      {/* Mobile Navigation Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-gray-800 text-white">
           <NavLink
@@ -103,6 +118,7 @@ const Header = () => {
             onClick={toggleMenu}
             className="block py-2 px-4 hover:bg-gray-700"
           >
+            <RiMovie2AiFill className="inline mr-2" />
             All Movies
           </NavLink>
           <NavLink
