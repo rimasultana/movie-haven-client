@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const FavMovie = () => {
+  const {user} = useContext(AuthContext);
+  console.log(user);
   const [movies, setMovies] = useState([]);
-  const email = "rima@gmail.com";
 
   useEffect(() => {
     fetch(
-      `https://b10-a10-server-side-rimasultana.vercel.app/fav-movie/${email}`
+      `https://b10-a10-server-side-rimasultana.vercel.app/fav-movie/${user.email}`
     )
       .then((res) => res.json())
       .then((data) => setMovies(data))
