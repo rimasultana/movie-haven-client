@@ -1,8 +1,11 @@
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
 const MovieDetails = () => {
   const email = "rima@gmail.com";
+  const [favorite, setFavorite] = useState(false);
+
   const data = useLoaderData();
   const navigate = useNavigate();
   const {
@@ -14,7 +17,9 @@ const MovieDetails = () => {
     rating,
     summary,
     _id,
+    isFavorite,
   } = data;
+  console.log(isFavorite);
   const handleDelete = () => {
     fetch(`http://localhost:5000/movie/${_id}`, {
       method: "DELETE",
@@ -47,14 +52,14 @@ const MovieDetails = () => {
         if (data.insertedId) {
           toast.success("Added to Favorites!");
         }
+        setFavorite(true);
       })
       .catch((error) => console.log(error));
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
+    <div className=" py-10 bg-gray-100 flex justify-center items-center p-4">
       <div className="max-w-4xl w-full bg-white rounded-lg shadow-lg overflow-hidden">
-        {/* Movie Poster */}
         <div className="relative">
           <img
             className="w-full h-96 object-cover"
@@ -62,15 +67,10 @@ const MovieDetails = () => {
             alt={moviePoster}
           />
         </div>
-
-        {/* Movie Details */}
         <div className="p-6 space-y-6">
-          {/* Movie Title */}
           <h1 className="text-3xl font-extrabold text-gray-800">
             {movieTitle}
           </h1>
-
-          {/* Movie Info */}
           <div className="flex flex-wrap gap-4">
             <p className="text-lg font-semibold text-gray-600">
               Genre: {genre}
@@ -86,26 +86,22 @@ const MovieDetails = () => {
             </p>
           </div>
 
-          {/* Movie Summary */}
           <div>
             <h2 className="text-xl font-semibold text-gray-800">Summary</h2>
             <p className="text-gray-600">{summary}</p>
           </div>
 
-          {/* Buttons */}
           <div className="flex space-x-4">
-            {/* Delete Movie Button */}
             <button
               onClick={handleDelete}
               className="w-full sm:w-auto py-2 px-6 text-lg font-semibold text-white bg-red-500 rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105"
             >
               Delete Movie
             </button>
-
-            {/* Add to Favorite Button */}
             <button
+              disabled={isFavorite || favorite}
               onClick={handleAddToFavorite}
-              className="w-full sm:w-auto py-2 px-6 text-lg font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-300 transform hover:scale-105"
+              className="w-full sm:w-auto py-2 px-6 text-lg font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-300 transform hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:scale-100"
             >
               Add to Favorite
             </button>
