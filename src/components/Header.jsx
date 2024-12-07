@@ -18,8 +18,6 @@ import { AuthContext } from "../Provider/AuthProvider";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { logOut, user } = useContext(AuthContext);
-  console.log(user);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -98,7 +96,7 @@ const Header = () => {
               <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
                 {user && user.photoURL ? (
                   <img
-                    className="h-10 w-10"
+                    className="h-10 rounded-full w-10"
                     src={user?.photoURL}
                     title={user.displayName}
                     alt=""
