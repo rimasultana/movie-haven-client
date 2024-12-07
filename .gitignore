@@ -24,12 +24,7 @@ dist-ssr
 *.sln
 *.sw?
 
-#   VITE_apiKey="AIzaSyCcSpQ8E4NJQNQU94-roSj-8MkFCTDsq_0"
-#   VITE_authDomain="movie-haven-df1ab.firebaseapp.com"
-#   VITE_projectId="movie-haven-df1ab"
-#   VITE_storageBucket="movie-haven-df1ab.firebasestorage.app"
-#   VITE_messagingSenderId="822433687775"
-#   VITE_appId="1:822433687775:web:11e7db39ea2d5a0d5f216a"
+
 
 
 

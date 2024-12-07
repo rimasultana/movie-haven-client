@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   FaFilm,
@@ -13,9 +13,12 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { RiMovie2AiFill } from "react-icons/ri";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { logOut, user } = useContext(AuthContext);
+  console.log(user);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -66,30 +69,53 @@ const Header = () => {
           </NavLink>
         </nav>
         <div className="hidden md:flex items-center space-x-4">
-          <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
-            <FaUser className="text-xl text-white" />
-          </div>
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              `hover:text-primary transition ${isActive ? "text-primary" : ""}`
-            }
-          >
-            <FaSignInAlt className="inline mr-2" /> Login
-          </NavLink>
-          <NavLink
-            to="/register"
-            className={({ isActive }) =>
-              `hover:text-primary transition ${isActive ? "text-primary" : ""}`
-            }
-          >
-            <FaUserPlus className="inline mr-2" />
-            Register
-          </NavLink>
-          <button className="`hover:text-primary transition">
-            <FaSignOutAlt className="inline mr-2" />
-            Log Out
-          </button>
+          {!user ? (
+            <>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  `hover:text-primary transition ${
+                    isActive ? "text-primary" : ""
+                  }`
+                }
+              >
+                <FaSignInAlt className="inline mr-2" /> Login
+              </NavLink>
+              <NavLink
+                to="/register"
+                className={({ isActive }) =>
+                  `hover:text-primary transition ${
+                    isActive ? "text-primary" : ""
+                  }`
+                }
+              >
+                <FaUserPlus className="inline mr-2" />
+                Register
+              </NavLink>
+            </>
+          ) : (
+            <>
+              <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+                {user && user.photoURL ? (
+                  <img
+                    className="h-10 w-10"
+                    src={user?.photoURL}
+                    title={user.displayName}
+                    alt=""
+                  />
+                ) : (
+                  <FaUser className="text-xl text-white" />
+                )}
+              </div>
+              <button
+                onClick={() => logOut()}
+                className="`hover:text-primary transition"
+              >
+                <FaSignOutAlt className="inline mr-2" />
+                Log Out
+              </button>
+            </>
+          )}
         </div>
         <div className="md:hidden">
           <button
@@ -135,20 +161,33 @@ const Header = () => {
           >
             <FaHeart className="inline mr-2" /> My Favorites
           </NavLink>
-          <NavLink
-            to="/login"
-            onClick={toggleMenu}
-            className="block py-2 px-4 hover:bg-gray-700"
-          >
-            <FaSignInAlt className="inline mr-2" /> Login
-          </NavLink>
-          <NavLink
-            to="/register"
-            onClick={toggleMenu}
-            className="block py-2 px-4 hover:bg-gray-700"
-          >
-            <FaUserPlus className="inline mr-2" /> Register
-          </NavLink>
+          {!user && (
+            <>
+              <NavLink
+                to="/login"
+                onClick={toggleMenu}
+                className="block py-2 px-4 hover:bg-gray-700"
+              >
+                <FaSignInAlt className="inline mr-2" /> Login
+              </NavLink>
+              <NavLink
+                to="/register"
+                onClick={toggleMenu}
+                className="block py-2 px-4 hover:bg-gray-700"
+              >
+                <FaUserPlus className="inline mr-2" /> Register
+              </NavLink>
+            </>
+          )}
+          {user && (
+            <button
+              onClick={() => logOut()}
+              className="`hover:text-primary transition ml-4 pb-3"
+            >
+              <FaSignOutAlt className="inline mr-2" />
+              Log Out
+            </button>
+          )}
         </div>
       )}
     </header>

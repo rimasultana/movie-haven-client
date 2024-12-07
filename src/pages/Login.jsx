@@ -1,23 +1,33 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { userLogin, googleSignIn } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-
-    // Example login logic (you can replace this with actual authentication logic)
-    if (email === "test@example.com" && password === "password123") {
-      toast.success("Login successful!");
-      navigate("/"); // Navigate to home or desired route
-    } else {
-      toast.error("Invalid email or password. Please try again.");
-    }
+    userLogin(email, password)
+      .then(() => {
+        toast.success("Login successful!");
+        navigate(from);
+      })
+      .catch((error) => console.log(error));
+  };
+  const handleGoogleLogin = () => {
+    googleSignIn()
+      .then(() => {
+        toast.success("Login successful!");
+        navigate(from);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -60,24 +70,19 @@ const LoginPage = () => {
         </form>
         <div className="text-center mb-4">
           <p className="text-sm">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <a href="/register" className="text-primary hover:underline">
               Register here
             </a>
           </p>
         </div>
 
-        {/* Google Login Button */}
         <div className="text-center mt-4">
-          {/* <GoogleLogin
-            onSuccess={(response) => {
-              toast.success("Logged in with Google!");
-              navigate("/"); // Navigate after Google login
-            }}
-            onError={() => toast.error("Google login failed!")}
-          /> */}
           <div className="flex justify-center mt-4">
-            <button className="btn btn-outline btn-secondary">
+            <button
+              onClick={handleGoogleLogin}
+              className="btn btn-outline btn-secondary"
+            >
               <FaGoogle className="mr-2" />
               Login with Google
             </button>

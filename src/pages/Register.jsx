@@ -1,17 +1,21 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const { createUser, updateUserProfile, googleSignIn } =
+    useContext(AuthContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [photoURL, setPhotoURL] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
-  // Password Validation Logic
   const validatePassword = (password) => {
     const hasUpperCase = /[A-Z]/.test(password);
     const hasLowerCase = /[a-z]/.test(password);
@@ -29,18 +33,27 @@ const RegisterPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
     if (!validatePassword(password)) {
       return;
     }
-
-    // Example registration logic (you can replace this with actual registration logic)
-    if (name && email && photoURL && password) {
-      toast.success("Registration successful!");
-      navigate("/"); // Navigate to home or desired route
-    } else {
-      toast.error("Please fill in all fields.");
-    }
+    createUser(email, password)
+      .then(() => {
+        updateUserProfile(name, photoURL)
+          .then(() => {
+            navigate(from);
+            toast.success("Registration successful!");
+          })
+          .catch((error) => error.message);
+      })
+      .catch((error) => toast.error(error.message));
+  };
+  const handleGoogleLogin = () => {
+    googleSignIn()
+      .then(() => {
+        toast.success("Login successful!");
+        navigate(from);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -117,17 +130,12 @@ const RegisterPage = () => {
           </p>
         </div>
 
-        {/* Google Login Button */}
         <div className="text-center mt-4">
-          {/* <GoogleLogin
-            onSuccess={(response) => {
-              toast.success("Logged in with Google!");
-              navigate("/"); // Navigate after Google login
-            }}
-            onError={() => toast.error("Google login failed!")}
-          /> */}
           <div className="flex justify-center mt-4">
-            <button className="btn btn-outline btn-secondary">
+            <button
+              onClick={handleGoogleLogin}
+              className="btn btn-outline btn-secondary"
+            >
               <FaGoogle className="mr-2" />
               Register with Google
             </button>
