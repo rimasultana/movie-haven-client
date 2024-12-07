@@ -6,7 +6,9 @@ const FavMovie = () => {
   const email = "rima@gmail.com";
 
   useEffect(() => {
-    fetch(`http://localhost:5000/fav-movie/${email}`)
+    fetch(
+      `https://b10-a10-server-side-rimasultana.vercel.app/fav-movie/${email}`
+    )
       .then((res) => res.json())
       .then((data) => setMovies(data))
       .catch((error) => console.error(error));

@@ -43,7 +43,7 @@ const AddMovie = () => {
       return;
     }
     // post moive
-    fetch("http://localhost:5000/movie", {
+    fetch("https://b10-a10-server-side-rimasultana.vercel.app/movie", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

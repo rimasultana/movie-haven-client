@@ -4,7 +4,7 @@ import MovieCard from "../components/MovieCard";
 export default function Movies() {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/movie")
+    fetch("https://b10-a10-server-side-rimasultana.vercel.app/movie")
       .then((res) => res.json())
       .then((data) => setMovies(data))
       .catch((error) => console.error(error));

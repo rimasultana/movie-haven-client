@@ -52,7 +52,9 @@ const router = createBrowserRouter([
         path: "/movieDetails/:id",
         element: <MovieDetails />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/movie/${params.id}`),
+          fetch(
+            `https://b10-a10-server-side-rimasultana.vercel.app/movie/${params.id}`
+          ),
       },
     ],
   },

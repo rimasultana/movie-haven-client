@@ -21,7 +21,7 @@ const MovieDetails = () => {
   } = data;
   console.log(isFavorite);
   const handleDelete = () => {
-    fetch(`http://localhost:5000/movie/${_id}`, {
+    fetch(`https://b10-a10-server-side-rimasultana.vercel.app/movie/${_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +40,7 @@ const MovieDetails = () => {
 
   const handleAddToFavorite = () => {
     data.email = email;
-    fetch("http://localhost:5000/fav-movie", {
+    fetch("https://b10-a10-server-side-rimasultana.vercel.app/fav-movie", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
