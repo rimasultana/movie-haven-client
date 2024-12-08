@@ -116,7 +116,7 @@ const MovieDetails = () => {
               <p className="text-gray-600">{summary}</p>
             </div>
 
-            <div className="flex space-x-4">
+            <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
               <button
                 onClick={handleDelete}
                 className="w-full sm:w-auto py-2 px-6 text-lg font-semibold text-white bg-red-500 rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105"
@@ -131,7 +131,7 @@ const MovieDetails = () => {
               </button>
               <Link
                 to={`/updateMovie/${_id}`}
-                className="w-full sm:w-auto py-2 px-6 text-lg font-semibold text-black bg-yellow-200 rounded-lg hover:bg-yellow-500 transition duration-300 transform hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:scale-100"
+                className="w-full sm:w-auto text-center py-2 px-6 text-lg font-semibold text-black bg-yellow-200 rounded-lg hover:bg-yellow-500 transition duration-300 transform hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:scale-100"
               >
                 Update Movie
               </Link>
