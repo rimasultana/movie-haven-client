@@ -10,7 +10,7 @@ export default function Movies() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:5000/movie`)
+    fetch(`https://b10-a10-server-side-rimasultana.vercel.app/movie`)
       .then((res) => res.json())
       .then((data) => {
         setMovies(data);

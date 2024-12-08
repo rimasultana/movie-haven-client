@@ -5,7 +5,7 @@ import { Rating } from "react-simple-star-rating";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const AddMovie = () => {
-  const { user } = useContext(AuthContext);
+  const { user, theme } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -15,8 +15,31 @@ const AddMovie = () => {
   const [rating, setRating] = useState(0);
 
   const genres = ["Comedy", "Drama", "Horror", "Action", "Romance", "Sci-Fi"];
-
   const years = [2024, 2023, 2022, 2021, 2020];
+  const tooltipArray = [
+    "Terrible",
+    "Terrible+",
+    "Bad",
+    "Bad+",
+    "Average",
+    "Average+",
+    "Great",
+    "Great+",
+    "Awesome",
+    "Awesome+",
+  ];
+  const fillColorArray = [
+    "#f17a45",
+    "#f17a45",
+    "#f19745",
+    "#f19745",
+    "#f1a545",
+    "#f1a545",
+    "#f1b345",
+    "#f1b345",
+    "#f1d045",
+    "#f1d045",
+  ];
 
   const onSubmit = (data) => {
     const { moviePoster, movieTitle, duration, summary } = data;
@@ -42,7 +65,7 @@ const AddMovie = () => {
       toast.error("Summary must be at least 10 characters long.");
       return;
     }
-    fetch("http://localhost:5000/movie", {
+    fetch("https://b10-a10-server-side-rimasultana.vercel.app/movie", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,16 +87,29 @@ const AddMovie = () => {
       })
       .catch((err) => console.error(err));
   };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+    <div
+      className={`flex justify-center items-center min-h-screen ${
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-900"
+      }`}
+    >
+      <div
+        className={`w-full max-w-md p-6 rounded-lg shadow-lg ${
+          theme === "dark" ? "bg-gray-800" : "bg-white"
+        }`}
+      >
         <h2 className="text-3xl font-bold text-center mb-6">Add Movie</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label className="block text-gray-700">Movie Poster URL</label>
+            <label className="block font-semibold">Movie Poster URL</label>
             <input
               type="url"
-              className="input input-bordered w-full"
+              className={`input input-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("moviePoster", {
                 required: "Movie poster is required.",
               })}
@@ -85,10 +121,12 @@ const AddMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Movie Title</label>
+            <label className="block font-semibold">Movie Title</label>
             <input
               type="text"
-              className="input input-bordered w-full"
+              className={`input input-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("movieTitle", {
                 required: "Movie title is required.",
                 minLength: {
@@ -104,9 +142,11 @@ const AddMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Genre</label>
+            <label className="block font-semibold">Genre</label>
             <select
-              className="select select-bordered w-full"
+              className={`select select-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("genre", { required: "Please select a genre." })}
             >
               <option value="">Select Genre</option>
@@ -123,10 +163,12 @@ const AddMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Duration (in minutes)</label>
+            <label className="block font-semibold">Duration (in minutes)</label>
             <input
               type="number"
-              className="input input-bordered w-full"
+              className={`input input-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("duration", {
                 required: "Duration is required.",
                 min: {
@@ -142,9 +184,11 @@ const AddMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Release Year</label>
+            <label className="block font-semibold">Release Year</label>
             <select
-              className="select select-bordered w-full"
+              className={`select select-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("releaseYear", {
                 required: "Please select a release year.",
               })}
@@ -163,12 +207,16 @@ const AddMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Rating</label>
-            <div className="flex justify-start space-x-1">
+            <label className="block font-semibold">Rating</label>
+            <div className="demo space-x-1">
               <Rating
-                className="flex"
                 onClick={(rate) => setRating(rate)}
+                transition
+                allowFraction
+                showTooltip
                 ratingValue={rating}
+                tooltipArray={tooltipArray}
+                fillColorArray={fillColorArray}
               />
             </div>
             {rating === 0 && (
@@ -178,9 +226,11 @@ const AddMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Summary</label>
+            <label className="block font-semibold">Summary</label>
             <textarea
-              className="textarea textarea-bordered w-full"
+              className={`textarea textarea-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("summary", {
                 required: "Summary is required.",
                 minLength: {
@@ -196,7 +246,12 @@ const AddMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <button type="submit" className="btn btn-primary w-full">
+            <button
+              type="submit"
+              className={`btn btn-primary w-full ${
+                theme === "dark" ? "bg-blue-700 hover:bg-blue-800" : ""
+              }`}
+            >
               Add Movie
             </button>
           </div>

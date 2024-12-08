@@ -10,6 +10,7 @@ import Register from "../pages/Register";
 import MovieDetails from "../pages/MovieDeteils";
 import PrivateRoute from "./PraivetRoute";
 import UpdateMovie from "../pages/UpdateMovie";
+import About from "../pages/About";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
         element: <Movies />,
       },
       {
+        path: "/about",
+        element: <About />,
+      },
+      {
         path: "/login",
         element: <Login />,
       },
@@ -53,13 +58,13 @@ const router = createBrowserRouter([
         path: "/movieDetails/:id",
         element: <MovieDetails />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/movie/${params.id}`),
+          fetch(
+            `https://b10-a10-server-side-rimasultana.vercel.app/movie/${params.id}`
+          ),
       },
       {
         path: "/updateMovie/:id",
         element: <UpdateMovie />,
-        loader: ({ params }) =>
-          fetch(`http://localhost:5000/movie/${params.id}`),
       },
     ],
   },

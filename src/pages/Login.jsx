@@ -19,7 +19,9 @@ const LoginPage = () => {
         toast.success("Login successful!");
         navigate(from);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
   const handleGoogleLogin = () => {
     googleSignIn()

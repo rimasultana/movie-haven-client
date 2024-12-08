@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import LoadingSpinner from "../components/Loading";
 
 const UpdateMovie = () => {
-  const { user } = useContext(AuthContext);
+  const { user, theme } = useContext(AuthContext);
   const { id } = useParams();
   const navigate = useNavigate();
   const [movieData, setMovieData] = useState(null);
@@ -23,7 +23,7 @@ const UpdateMovie = () => {
   const years = [2024, 2023, 2022, 2021, 2020];
 
   useEffect(() => {
-    fetch(`http://localhost:5000/movie/${id}`)
+    fetch(`https://b10-a10-server-side-rimasultana.vercel.app/movie/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setMovieData(data);
@@ -63,7 +63,7 @@ const UpdateMovie = () => {
       return;
     }
 
-    fetch(`http://localhost:5000/movie/${id}`, {
+    fetch(`https://b10-a10-server-side-rimasultana.vercel.app/movie/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -85,15 +85,27 @@ const UpdateMovie = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+    <div
+      className={`flex justify-center items-center min-h-screen ${
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-900"
+      }`}
+    >
+      <div
+        className={`w-full max-w-md p-6 rounded-lg shadow-lg ${
+          theme === "dark" ? "bg-gray-800" : "bg-white"
+        }`}
+      >
         <h2 className="text-3xl font-bold text-center mb-6">Update Movie</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label className="block text-gray-700">Movie Poster URL</label>
+            <label className="block font-semibold">Movie Poster URL</label>
             <input
               type="url"
-              className="input input-bordered w-full"
+              className={`input input-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("moviePoster", {
                 required: "Movie poster is required.",
               })}
@@ -105,10 +117,12 @@ const UpdateMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Movie Title</label>
+            <label className="block font-semibold">Movie Title</label>
             <input
               type="text"
-              className="input input-bordered w-full"
+              className={`input input-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("movieTitle", {
                 required: "Movie title is required.",
                 minLength: {
@@ -124,9 +138,11 @@ const UpdateMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Genre</label>
+            <label className="block font-semibold">Genre</label>
             <select
-              className="select select-bordered w-full"
+              className={`select select-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("genre", { required: "Please select a genre." })}
             >
               <option value="">Select Genre</option>
@@ -143,10 +159,12 @@ const UpdateMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Duration (in minutes)</label>
+            <label className="block font-semibold">Duration (in minutes)</label>
             <input
               type="number"
-              className="input input-bordered w-full"
+              className={`input input-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("duration", {
                 required: "Duration is required.",
                 min: {
@@ -162,9 +180,11 @@ const UpdateMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Release Year</label>
+            <label className="block font-semibold">Release Year</label>
             <select
-              className="select select-bordered w-full"
+              className={`select select-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("releaseYear", {
                 required: "Please select a release year.",
               })}
@@ -183,7 +203,7 @@ const UpdateMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Rating</label>
+            <label className="block font-semibold">Rating</label>
             <div className="flex justify-start space-x-1">
               <Rating
                 className="flex"
@@ -198,9 +218,11 @@ const UpdateMovie = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Summary</label>
+            <label className="block font-semibold">Summary</label>
             <textarea
-              className="textarea textarea-bordered w-full"
+              className={`textarea textarea-bordered w-full ${
+                theme === "dark" ? "bg-gray-700 text-white" : ""
+              }`}
               {...register("summary", {
                 required: "Summary is required.",
                 minLength: {

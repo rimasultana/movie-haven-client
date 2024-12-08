@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 const MovieDetails = () => {
-  const { user } = useContext(AuthContext);
+  const { user, theme } = useContext(AuthContext);
 
   const data = useLoaderData();
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const MovieDetails = () => {
     _id,
   } = data;
   const handleDelete = () => {
-    fetch(`http://localhost:5000/movie/${_id}`, {
+    fetch(`https://b10-a10-server-side-rimasultana.vercel.app/movie/${_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -37,13 +37,16 @@ const MovieDetails = () => {
   const handleAddToFavorite = async () => {
     try {
       data.email = user?.email;
-      const response = await fetch("http://localhost:5000/fav-movie", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://b10-a10-server-side-rimasultana.vercel.app/fav-movie",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
       console.log(response);
       if (!response.ok) {
         const errorData = await response.json();
@@ -62,8 +65,16 @@ const MovieDetails = () => {
 
   return (
     <>
-      <div className="  py-10 bg-gray-100 flex justify-center items-center p-4">
-        <div className="max-w-4xl w-full bg-white rounded-lg shadow-lg overflow-hidden">
+      <div
+        className={`bg-${
+          theme === "dark" ? "gray-800" : "base-200"
+        } flex justify-center items-center py-10`}
+      >
+        <div
+          className={`bg-${
+            theme === "dark" ? "gray-800" : "base-200"
+          } max-w-4xl w-full rounded-lg shadow-lg overflow-hidden`}
+        >
           <div className="relative">
             <img
               className="w-full h-96 object-cover"
@@ -72,7 +83,11 @@ const MovieDetails = () => {
             />
           </div>
           <div className="p-6 space-y-6">
-            <h1 className="text-3xl font-extrabold text-gray-800">
+            <h1
+              className={`text-3xl font-extrabold bg-${
+                theme === "dark" ? "gray-800" : "base-200"
+              } `}
+            >
               {movieTitle}
             </h1>
             <div className="flex flex-wrap gap-4">
@@ -91,7 +106,13 @@ const MovieDetails = () => {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-gray-800">Summary</h2>
+              <h2
+                className={`text-xl font-semibold bg-${
+                  theme === "dark" ? "gray-800" : "base-200"
+                } `}
+              >
+                Summary
+              </h2>
               <p className="text-gray-600">{summary}</p>
             </div>
 

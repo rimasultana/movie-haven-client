@@ -4,7 +4,6 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   onAuthStateChanged,
-  sendPasswordResetEmail,
   signInWithPopup,
   signOut,
   updateProfile,
@@ -18,6 +17,16 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
+  const [theme, setTheme] = useState("light");
+  const [isDarkMode, setDarkMode] = useState(false);
+
+  const toggleTheme = (checked) => {
+    setDarkMode(checked);
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -26,11 +35,6 @@ const AuthProvider = ({ children }) => {
   const userLogin = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
-  };
-
-  const resetPassword = (email) => {
-    setLoading(true);
-    return sendPasswordResetEmail(auth, email);
   };
 
   const googleSignIn = () => {
@@ -53,6 +57,9 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       setLoading(false);
     });
+    const storedTheme = localStorage.getItem("theme") || "light";
+    setTheme(storedTheme);
+    document.documentElement.setAttribute("data-theme", storedTheme);
     return () => {
       return unsubscribe();
     };
@@ -65,7 +72,9 @@ const AuthProvider = ({ children }) => {
     googleSignIn,
     logOut,
     updateUserProfile,
-    resetPassword,
+    theme,
+    toggleTheme,
+    isDarkMode,
   };
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>
