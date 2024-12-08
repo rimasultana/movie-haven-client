@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         path: "/add-movie",
         element: (
           <PrivateRoute>
-            <AddMovie />,
+            <AddMovie />
           </PrivateRoute>
         ),
       },
