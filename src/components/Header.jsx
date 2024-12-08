@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   FaFilm,
@@ -17,9 +17,23 @@ import { AuthContext } from "../Provider/AuthProvider";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [theme, setTheme] = useState("light");
   const { logOut, user } = useContext(AuthContext);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+  useEffect(() => {
+    // Get stored theme or fallback to "light"
+    const storedTheme = localStorage.getItem("theme") || "light";
+    setTheme(storedTheme);
+    document.documentElement.setAttribute("data-theme", storedTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
   };
 
   return (
@@ -65,6 +79,14 @@ const Header = () => {
           >
             <FaHeart className="inline mr-2" /> My Favorites
           </NavLink>
+          <button className="btn btn-outline" onClick={toggleTheme}>
+            {theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
+          </button>
+          <input
+            type="checkbox"
+            className="toggle toggle-success"
+            defaultChecked
+          />
         </nav>
         <div className="hidden md:flex items-center space-x-4">
           {!user ? (
