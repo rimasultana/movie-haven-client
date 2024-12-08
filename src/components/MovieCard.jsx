@@ -81,14 +81,14 @@ const MovieCard = ({ movie, deleteCom, setMovies, movies }) => {
           {movieTitle}
         </h2>
         <p
-          className={`text-sm px-3 py-1 inline-block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ${themeStyles.textSecondary}`}
+          className={`text-sm px-3 py-1 inline-block bg-purple-100 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ${themeStyles.textSecondary}`}
         >
           {genre}
         </p>
-        <p className={`text-sm ${themeStyles.textSecondary}`}>
+        <p className={`text-sm ${themeStyles.textSecondary}`}> <strong>Duration: </strong>
           {duration} mins
         </p>
-        <p className={`text-sm ${themeStyles.textSecondary}`}>{releaseYear}</p>
+        <p className={`text-sm ${themeStyles.textSecondary}`}> <strong>Release Year: </strong> {releaseYear}</p>
       </div>
 
       {deleteCom ? (
