@@ -46,7 +46,7 @@ const FeaturedMovies = () => {
           >
             Discover the top 6 highest-rated movies!
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          <div className="grid text-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             {movies.map((movie) => (
               <MovieCard key={movie._id} movie={movie} theme={theme} />
             ))}
