@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Rating } from "react-simple-star-rating";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const AddMovie = () => {
+  const { user } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -12,16 +14,14 @@ const AddMovie = () => {
   } = useForm();
   const [rating, setRating] = useState(0);
 
-  // Genre options
   const genres = ["Comedy", "Drama", "Horror", "Action", "Romance", "Sci-Fi"];
 
-  // Release year options
   const years = [2024, 2023, 2022, 2021, 2020];
 
-  // Validation function for custom validation
   const onSubmit = (data) => {
     const { moviePoster, movieTitle, duration, summary } = data;
     data.rating = rating;
+    data.email = user?.email;
 
     if (
       !moviePoster.startsWith("http://") &&
@@ -42,8 +42,7 @@ const AddMovie = () => {
       toast.error("Summary must be at least 10 characters long.");
       return;
     }
-    // post moive
-    fetch("https://b10-a10-server-side-rimasultana.vercel.app/movie", {
+    fetch("http://localhost:5000/movie", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +64,6 @@ const AddMovie = () => {
       })
       .catch((err) => console.error(err));
   };
-
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
@@ -164,15 +162,13 @@ const AddMovie = () => {
               </span>
             )}
           </div>
-
-          {/* Rating */}
           <div className="mb-4">
             <label className="block text-gray-700">Rating</label>
             <div className="flex justify-start space-x-1">
               <Rating
                 className="flex"
                 onClick={(rate) => setRating(rate)}
-                ratingValue={rating} /* rating value is set here */
+                ratingValue={rating}
               />
             </div>
             {rating === 0 && (
@@ -199,8 +195,6 @@ const AddMovie = () => {
               </span>
             )}
           </div>
-
-          {/* Add Movie Button */}
           <div className="mb-4">
             <button type="submit" className="btn btn-primary w-full">
               Add Movie

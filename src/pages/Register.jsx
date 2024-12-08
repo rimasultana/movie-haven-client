@@ -61,7 +61,6 @@ const RegisterPage = () => {
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold text-center mb-6">Register</h2>
         <form onSubmit={handleRegister}>
-          {/* Name Field */}
           <div className="mb-4">
             <label className="block text-gray-700">Name</label>
             <input
@@ -72,8 +71,6 @@ const RegisterPage = () => {
               placeholder="Enter your name"
             />
           </div>
-
-          {/* Email Field */}
           <div className="mb-4">
             <label className="block text-gray-700">Email</label>
             <input
@@ -84,8 +81,6 @@ const RegisterPage = () => {
               placeholder="Enter your email"
             />
           </div>
-
-          {/* Photo URL Field */}
           <div className="mb-4">
             <label className="block text-gray-700">Photo URL</label>
             <input
@@ -96,8 +91,6 @@ const RegisterPage = () => {
               placeholder="Enter your photo URL"
             />
           </div>
-
-          {/* Password Field */}
           <div className="mb-4">
             <label className="block text-gray-700">Password</label>
             <input
@@ -111,16 +104,12 @@ const RegisterPage = () => {
               <p className="text-red-500 text-sm mt-1">{passwordError}</p>
             )}
           </div>
-
-          {/* Register Button */}
           <div className="mb-4">
             <button type="submit" className="btn btn-primary w-full">
               Register
             </button>
           </div>
         </form>
-
-        {/* Login Link */}
         <div className="text-center mb-4">
           <p className="text-sm">
             Already have an account?{" "}

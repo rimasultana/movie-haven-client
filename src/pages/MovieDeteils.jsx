@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useContext } from "react";
 import toast from "react-hot-toast";
 import { useLoaderData, useNavigate } from "react-router-dom";
-
+import { AuthContext } from "../Provider/AuthProvider";
 const MovieDetails = () => {
-  const email = "rima@gmail.com";
-  const [favorite, setFavorite] = useState(false);
+  const { user } = useContext(AuthContext);
 
   const data = useLoaderData();
   const navigate = useNavigate();
@@ -17,11 +16,9 @@ const MovieDetails = () => {
     rating,
     summary,
     _id,
-    isFavorite,
   } = data;
-  console.log(isFavorite);
   const handleDelete = () => {
-    fetch(`https://b10-a10-server-side-rimasultana.vercel.app/movie/${_id}`, {
+    fetch(`http://localhost:5000/movie/${_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -37,24 +34,30 @@ const MovieDetails = () => {
       })
       .catch((error) => console.log(error));
   };
-
-  const handleAddToFavorite = () => {
-    data.email = email;
-    fetch("https://b10-a10-server-side-rimasultana.vercel.app/fav-movie", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
-          toast.success("Added to Favorites!");
-        }
-        setFavorite(true);
-      })
-      .catch((error) => console.log(error));
+  const handleAddToFavorite = async () => {
+    try {
+      data.email = user?.email;
+      const response = await fetch("http://localhost:5000/fav-movie", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(response);
+      if (!response.ok) {
+        const errorData = await response.json();
+        toast.error(errorData.error);
+        return;
+      }
+      const responseData = await response.json();
+      if (responseData.insertedId) {
+        toast.success("Added to Favorites!");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      toast.error("Something went wrong. Please try again later.");
+    }
   };
 
   return (
@@ -99,7 +102,6 @@ const MovieDetails = () => {
               Delete Movie
             </button>
             <button
-              disabled={isFavorite || favorite}
               onClick={handleAddToFavorite}
               className="w-full sm:w-auto py-2 px-6 text-lg font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-300 transform hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:scale-100"
             >
