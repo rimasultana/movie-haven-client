@@ -23,7 +23,7 @@ const MovieCard = ({ movie, deleteCom, setMovies, movies }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
-          toast.success("Successfully deleted movie");
+          toast.success("Successfully deleted favorite movie");
         }
         setMovies(movies.filter((m) => m._id !== _id));
       })
@@ -85,10 +85,15 @@ const MovieCard = ({ movie, deleteCom, setMovies, movies }) => {
         >
           {genre}
         </p>
-        <p className={`text-sm ${themeStyles.textSecondary}`}> <strong>Duration: </strong>
+        <p className={`text-sm ${themeStyles.textSecondary}`}>
+          {" "}
+          <strong>Duration: </strong>
           {duration} mins
         </p>
-        <p className={`text-sm ${themeStyles.textSecondary}`}> <strong>Release Year: </strong> {releaseYear}</p>
+        <p className={`text-sm ${themeStyles.textSecondary}`}>
+          {" "}
+          <strong>Release Year: </strong> {releaseYear}
+        </p>
       </div>
 
       {deleteCom ? (
@@ -96,7 +101,7 @@ const MovieCard = ({ movie, deleteCom, setMovies, movies }) => {
           onClick={handleDelete}
           className={`w-full py-2 text-lg font-semibold text-white ${themeStyles.buttonBg} rounded-lg shadow-xl ${themeStyles.buttonHoverBg} focus:outline-none focus:ring-4 focus:ring-red-300 transform hover:scale-105 transition-all duration-300`}
         >
-          Delete Movie
+          Delete Favorite
         </button>
       ) : (
         <div
