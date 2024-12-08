@@ -195,13 +195,12 @@ const Header = () => {
           </NavLink>
           <NavLink
             to="/about"
-            className={({ isActive }) =>
-              `hover:text-primary transition ${isActive ? "text-primary" : ""}`
-            }
+            onClick={toggleMenu}
+            className="block py-2 px-4 hover:bg-gray-700"
           >
-            <FcAbout className="inline mr-2" />
-            About us
+            <FcAbout className="inline mr-2" /> About us
           </NavLink>
+
           {!user && (
             <>
               <NavLink

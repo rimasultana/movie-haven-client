@@ -41,26 +41,27 @@ export default function Movies() {
   }
 
   return (
-    <div className="py-10">
-      <div className="mb-8 flex justify-center items-center space-x-4">
+    <div className="py-10 px-4">
+      <div className="mb-8 flex justify-center items-center space-x-4 flex-col sm:flex-row">
         <input
           type="text"
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search for a movie..."
-          className="px-4 py-2 w-80 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-2 w-full sm:w-80 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 sm:mb-0"
         />
         <button
           onClick={handleSearch}
-          className="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300"
+          className="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300 w-full sm:w-auto"
         >
           Search
         </button>
       </div>
+
       <div>
         {filteredMovies.length === 0 ? (
-          <div className="flex justify-center items-center w-11/12 mx-auto">
-            <div className="text-center p-6 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white rounded-lg shadow-xl">
+          <div className="flex justify-center items-center w-full mx-auto">
+            <div className="text-center p-6 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white rounded-lg shadow-xl w-full sm:w-3/4 md:w-1/2">
               <h2 className="text-3xl font-bold mb-4">No Movies Found</h2>
               <p className="text-xl font-medium mb-6">
                 We couldn&lsquo;t find any movies matching your search.

@@ -3,7 +3,8 @@
 Welcome to **Movie Haven**! This is a dynamic and user-friendly Movie Portal that simplifies the process of exploring, managing, and enjoying movies.
 
 ## Live Site URL
-Access the live website here: [Movie Haven](#) *(Replace with your deployed URL)*
+
+Access the live website here: [Movie Haven](https://movie-haven-df1ab.web.app)
 
 ## Features
 
@@ -14,13 +15,14 @@ Access the live website here: [Movie Haven](#) *(Replace with your deployed URL)
 - **Search & Filter:** Intuitive search and filter options powered by the `match-sorter` library for efficient exploration.
 - **Responsive Design:** Fully responsive and optimized for all devices, ensuring seamless usability.
 - **Social Authentication:** Authenticate users with Google for quick and secure login and registration.
-- **Toast Notifications:** Real-time feedback using `react-hot-toast` and `sweetalert2` for user actions like adding or deleting movies.
+- **Toast Notifications:** Real-time feedback using `react-hot-toast` for user actions like adding or deleting movies.
 - **Dark Mode:** Switch between light and dark themes with the `react-toggle-dark-mode` library.
-- **Ratings:** Movie ratings integrated using `react-simple-star-rating` and `react-star-ratings` for an engaging experience.
+- **Ratings:** Movie ratings integrated using `react-star-ratings` for an engaging experience.
 
 ## Tech Stack
 
 ### Frontend:
+
 - React.js
 - Tailwind CSS
 - DaisyUI
@@ -28,18 +30,19 @@ Access the live website here: [Movie Haven](#) *(Replace with your deployed URL)
 - Firebase Authentication
 
 ### Backend:
+
 - Node.js
 - Express.js
 
 ### Database:
+
 - MongoDB
 
 ### Packages:
+
 - `react-hook-form` for form validation
 - `react-hot-toast` for notifications
 - `swiper` for carousel effects
-- `sweetalert2` for alert dialogs
-- `aos` for scroll animations
 
 ## Installation
 
@@ -47,8 +50,7 @@ To run this project locally:
 
 1. Clone the repository:
    ```bash
-  [ git clone https://github.com/yourusername/movie-haven.git](https://github.com/programming-hero-web-course2/b10-a10-client-side-rimasultana)
+     git clone https://github.com/programming-hero-web-course2/b10-a10-client-side-rimasultana
    ```
 
 Thank you for visiting **Movie Haven**! Dive in and enjoy exploring the world of movies.
-

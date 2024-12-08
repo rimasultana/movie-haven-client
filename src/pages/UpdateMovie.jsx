@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Rating } from "react-simple-star-rating";
+// import { Rating } from "react-simple-star-rating";
 import { AuthContext } from "../Provider/AuthProvider";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingSpinner from "../components/Loading";
+import StarRatings from 'react-star-ratings';
+
 
 const UpdateMovie = () => {
   const { user, theme } = useContext(AuthContext);
@@ -205,11 +207,18 @@ const UpdateMovie = () => {
           <div className="mb-4">
             <label className="block font-semibold">Rating</label>
             <div className="flex justify-start space-x-1">
-              <Rating
+              {/* <Rating
                 className="flex"
                 onClick={(rate) => setRating(rate)}
                 ratingValue={ratings}
-              />
+              /> */}
+                     <StarRatings
+          rating={ratings}
+          starRatedColor="blue"
+          changeRating={(rate) => setRating(rate)}
+          numberOfStars={5}
+          name='rating'
+        />
             </div>
             {ratings === 0 && (
               <span className="text-red-500 text-sm">

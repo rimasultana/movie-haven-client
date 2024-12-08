@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Rating } from "react-simple-star-rating";
 import { AuthContext } from "../Provider/AuthProvider";
+import StarRatings from 'react-star-ratings';
 
 const AddMovie = () => {
   const { user, theme } = useContext(AuthContext);
@@ -16,30 +16,8 @@ const AddMovie = () => {
 
   const genres = ["Comedy", "Drama", "Horror", "Action", "Romance", "Sci-Fi"];
   const years = [2024, 2023, 2022, 2021, 2020];
-  const tooltipArray = [
-    "Terrible",
-    "Terrible+",
-    "Bad",
-    "Bad+",
-    "Average",
-    "Average+",
-    "Great",
-    "Great+",
-    "Awesome",
-    "Awesome+",
-  ];
-  const fillColorArray = [
-    "#f17a45",
-    "#f17a45",
-    "#f19745",
-    "#f19745",
-    "#f1a545",
-    "#f1a545",
-    "#f1b345",
-    "#f1b345",
-    "#f1d045",
-    "#f1d045",
-  ];
+ 
+
 
   const onSubmit = (data) => {
     const { moviePoster, movieTitle, duration, summary } = data;
@@ -209,7 +187,7 @@ const AddMovie = () => {
           <div className="mb-4">
             <label className="block font-semibold">Rating</label>
             <div className="demo space-x-1">
-              <Rating
+              {/* <Rating
                 onClick={(rate) => setRating(rate)}
                 transition
                 allowFraction
@@ -217,7 +195,14 @@ const AddMovie = () => {
                 ratingValue={rating}
                 tooltipArray={tooltipArray}
                 fillColorArray={fillColorArray}
-              />
+              /> */}
+               <StarRatings
+          rating={rating}
+          starRatedColor="blue"
+          changeRating={(rate) => setRating(rate)}
+          numberOfStars={5}
+          name='rating'
+        />
             </div>
             {rating === 0 && (
               <span className="text-red-500 text-sm">
