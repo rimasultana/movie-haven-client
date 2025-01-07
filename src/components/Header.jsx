@@ -29,7 +29,9 @@ const Header = () => {
   return (
     <header
       className={`${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-200 text-gray-900"
       } sticky top-0 z-50`}
     >
       <div className="container mx-auto w-11/12 px-4 py-3 flex justify-between items-center">
