@@ -1,6 +1,7 @@
 import Banner from "../components/Banner";
 import Contact from "../components/Contact";
 import FeaturedMovies from "../components/FeaturedMovies";
+import PopularCategories from "../components/PopularCategories";
 import Sponser from "../components/Spnser";
 
 export default function Home() {
@@ -11,6 +12,9 @@ export default function Home() {
       </div>
       <div>
         <FeaturedMovies />
+      </div>
+      <div>
+        <PopularCategories />
       </div>
       <div className="py-5">
         <Sponser />
