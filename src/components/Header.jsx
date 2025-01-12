@@ -42,7 +42,7 @@ const Header = () => {
             }`}
           />
           <Link to="/" className="text-2xl font-bold">
-            MovieHaven
+            Movie Haven
           </Link>
         </div>
         <nav className="hidden md:flex space-x-6">
