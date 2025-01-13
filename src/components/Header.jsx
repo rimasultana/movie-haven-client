@@ -52,7 +52,7 @@ const Header = () => {
               `hover:text-primary transition ${isActive ? "text-primary" : ""}`
             }
           >
-            <FaHome className="inline mr-2" /> Homes
+            <FaHome className="inline mr-2" /> Home
           </NavLink>
           <NavLink
             to="/all-movie"
